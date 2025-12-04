@@ -1,5 +1,7 @@
 # GKE AI Agent Demo with Vertex AI
 
+![Capital Agent Banner](assets/banner.png)
+
 This project demonstrates a production-ready deployment of an AI Agent application on **Google Kubernetes Engine (GKE) Autopilot**. It features a complete GitOps-style CI/CD pipeline using **Cloud Build** and **Cloud Deploy**, with advanced networking capabilities via **Gateway API**.
 
 ## 🏗️ Architecture
