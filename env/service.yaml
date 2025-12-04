@@ -5,7 +5,7 @@ metadata:
   labels:
     app: capital-agent
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: capital-agent
   ports:
