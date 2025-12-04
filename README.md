@@ -53,6 +53,9 @@ graph TD
 ### 1. Infrastructure Setup
 Provision the GKE clusters, CI/CD pipeline, and IAM roles using Terraform.
 
+> [!IMPORTANT]
+> **GitHub Connection**: Before running Terraform, ensure your GitHub repository is connected to Cloud Build in the [Google Cloud Console](https://console.cloud.google.com/cloud-build/triggers/connect). You need to manually authorize the Google Cloud Build GitHub App if you haven't done so already.
+
 ```bash
 cd infra
 # Initialize Terraform
