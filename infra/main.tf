@@ -19,8 +19,7 @@ resource "google_project_service" "apis" {
     "cloudbuild.googleapis.com",
     "artifactregistry.googleapis.com",
     "clouddeploy.googleapis.com",
-    "compute.googleapis.com",
-    "sourcerepo.googleapis.com"
+    "compute.googleapis.com"
   ])
   service            = each.key
   disable_on_destroy = false
@@ -90,7 +89,7 @@ resource "google_project_iam_member" "cloudbuild_roles" {
     "roles/artifactregistry.writer",
     "roles/clouddeploy.releaser",
     "roles/container.developer",
-    "roles/storage.objectViewer"
+    "roles/storage.admin"
   ])
   project = var.project_id
   role    = each.key
