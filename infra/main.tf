@@ -12,6 +12,15 @@ provider "google" {
   region  = var.region
 }
 
+data "google_project" "project" {}
+
+# Grant Cloud Build SA permission to impersonate Compute Engine Default SA
+resource "google_service_account_iam_member" "act_as_compute" {
+  service_account_id = "projects/${var.project_id}/serviceAccounts/${data.google_project.project.number}-compute@developer.gserviceaccount.com"
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.cloudbuild_sa.email}"
+}
+
 # Enable necessary APIs
 resource "google_project_service" "apis" {
   for_each = toset([
