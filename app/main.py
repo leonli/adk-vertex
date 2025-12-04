@@ -27,6 +27,9 @@ ALLOWED_ORIGINS = ["http://localhost", "http://localhost:8080", "*"]
 # Set web=True if you intend to serve a web interface, False otherwise
 SERVE_WEB_INTERFACE = True
 
+PROJECT_ID = os.environ.get("PROJECT_ID")
+LOCATION = os.environ.get("LOCATION")
+
 # Call the function to get the FastAPI app instance
 # Ensure the agent directory name ('capital_agent') matches your agent folder
 app: FastAPI = get_fast_api_app(
@@ -34,6 +37,9 @@ app: FastAPI = get_fast_api_app(
     session_service_uri=SESSION_SERVICE_URI,
     allow_origins=ALLOWED_ORIGINS,
     web=SERVE_WEB_INTERFACE,
+    project=PROJECT_ID,
+    location=LOCATION,
+    vertexai=True,
 )
 
 # You can add more FastAPI routes or configurations below if needed
