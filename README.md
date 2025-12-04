@@ -8,11 +8,11 @@ The system consists of two environments (**Dev** and **Prod**) and uses a Global
 
 ```mermaid
 graph TD
-    User((User)) -->|HTTPS| GCLB[Global External LB<br>(Gateway API)]
+    User((User)) -->|HTTPS| GCLB["Global External LB<br>(Gateway API)"]
     
     subgraph cluster_gke [GKE Autopilot Cluster]
         direction TB
-        GCLB -->|HTTPRoute| Service[K8s Service<br>(ClusterIP)]
+        GCLB -->|HTTPRoute| Service["K8s Service<br>(ClusterIP)"]
         
         subgraph cluster_affinity [Session Affinity Cookie]
             Service --> Pod1[Agent Pod 1]
@@ -21,7 +21,7 @@ graph TD
         end
     end
 
-    Pod1 -.->|Workload Identity| VertexAI[Vertex AI<br>(Gemini Model)]
+    Pod1 -.->|Workload Identity| VertexAI["Vertex AI<br>(Gemini Model)"]
     
     subgraph cluster_cicd [CI/CD Pipeline]
         direction TB
