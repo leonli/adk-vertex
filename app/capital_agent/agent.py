@@ -36,10 +36,7 @@ capital_agent = LlmAgent(
              Example Query: "What's the capital of France?"
              Example Response: "The capital of France is Paris."
         """,
-    tools=[get_capital_city], # Provide the function directly
-    project=os.environ.get("PROJECT_ID"),
-    location=os.environ.get("LOCATION"),
-    vertexai=True
+    tools=[get_capital_city] # Provide the function directly
 )
 
 root_agent = capital_agent

@@ -22,10 +22,12 @@ spec:
         env:
         - name: PORT
           value: "8080"
-        - name: PROJECT_ID
+        - name: GOOGLE_CLOUD_PROJECT
           value: "helloworld-334009"
-        - name: LOCATION
+        - name: GOOGLE_CLOUD_LOCATION
           value: "us-central1"
+        - name: GOOGLE_GENAI_USE_VERTEXAI
+          value: "true"
         resources:
           requests:
             cpu: "250m"
