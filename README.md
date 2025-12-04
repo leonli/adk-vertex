@@ -42,7 +42,27 @@ graph TD
 -   **Workload Identity**: Secure, keyless authentication to Vertex AI.
 -   **Health Checks**: Custom `HealthCheckPolicy` ensuring the LB checks `/healthz` instead of the default root path.
 
-## 🚀 Getting Started
+## � Security & IAM Design
+
+The project uses a **Least Privilege** security model with distinct Service Accounts for Build and Runtime.
+
+### 1. Build Time: `cloudbuild-sa`
+-   **Role**: Used exclusively by Cloud Build to build images and deploy to GKE.
+-   **Permissions**:
+    -   `roles/container.developer`: To deploy to GKE clusters.
+    -   `roles/clouddeploy.releaser`: To create and manage Cloud Deploy releases.
+    -   `roles/artifactregistry.writer`: To push Docker images.
+    -   `roles/iam.serviceAccountUser`: To impersonate the Compute Engine SA during deployment (required for GKE Autopilot).
+
+### 2. Runtime: `agent-sa` + Workload Identity
+-   **Role**: Used by the AI Agent Pods to access Vertex AI.
+-   **Mechanism**: **Workload Identity**.
+    -   We create a Google Service Account (`agent-sa`) with `roles/aiplatform.user`.
+    -   We bind it to a Kubernetes Service Account (`agent-ksa`).
+    -   The Pods use `agent-ksa`, effectively "impersonating" `agent-sa` without needing key files.
+-   **Benefit**: The application has **no long-lived secrets**. Access is granted strictly to the Pods running in the cluster.
+
+## �🚀 Getting Started
 
 ### Prerequisites
 -   Google Cloud Project (with Billing enabled).
