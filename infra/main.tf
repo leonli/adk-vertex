@@ -43,9 +43,22 @@ resource "google_artifact_registry_repository" "app_repo" {
   depends_on    = [google_project_service.apis]
 }
 
-# GKE Autopilot Cluster
+# GKE Autopilot Cluster (Prod)
 resource "google_container_cluster" "primary" {
-  name     = "agent-cluster"
+  name     = "agent-cluster-prod"
+  location = var.region
+  
+  enable_autopilot = true
+
+  # Set deletion_protection to false for demo purposes to allow easy cleanup
+  deletion_protection = false
+
+  depends_on = [google_project_service.apis]
+}
+
+# GKE Autopilot Cluster (Dev)
+resource "google_container_cluster" "dev" {
+  name     = "agent-cluster-dev"
   location = var.region
   
   enable_autopilot = true
@@ -63,15 +76,51 @@ resource "google_clouddeploy_delivery_pipeline" "pipeline" {
 
   serial_pipeline {
     stages {
+      profiles = ["dev"]
+      target_id = google_clouddeploy_target.dev.name
+    }
+
+    stages {
       profiles = ["prod"]
       target_id = google_clouddeploy_target.prod.name
+      
+      strategy {
+        canary {
+          runtime_config {
+            kubernetes {
+              service_networking {
+                service = "capital-agent-service"
+                deployment = "capital-agent"
+              }
+            }
+          }
+          canary_deployment {
+            percentages = [50]
+            verify = false
+          }
+        }
+      }
     }
   }
   
   depends_on = [google_project_service.apis]
 }
 
-# Cloud Deploy Target
+# Cloud Deploy Target (Dev)
+resource "google_clouddeploy_target" "dev" {
+  location = var.region
+  name     = "dev-target"
+
+  gke {
+    cluster = google_container_cluster.dev.id
+  }
+
+  require_approval = false
+  
+  depends_on = [google_project_service.apis]
+}
+
+# Cloud Deploy Target (Prod)
 resource "google_clouddeploy_target" "prod" {
   location = var.region
   name     = "prod-target"
@@ -80,7 +129,7 @@ resource "google_clouddeploy_target" "prod" {
     cluster = google_container_cluster.primary.id
   }
 
-  require_approval = false
+  require_approval = true
   
   depends_on = [google_project_service.apis]
 }

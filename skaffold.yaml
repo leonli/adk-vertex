@@ -16,6 +16,13 @@ manifests:
 
 
 profiles:
+  - name: dev
+    manifests:
+      rawYaml:
+        - env/deployment.yaml
+        - env/service.yaml
+        - env/serviceaccount.yaml
+
   - name: prod
     manifests:
       rawYaml:
