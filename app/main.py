@@ -37,9 +37,6 @@ app: FastAPI = get_fast_api_app(
     session_service_uri=SESSION_SERVICE_URI,
     allow_origins=ALLOWED_ORIGINS,
     web=SERVE_WEB_INTERFACE,
-    project=PROJECT_ID,
-    location=LOCATION,
-    vertexai=True,
 )
 
 # You can add more FastAPI routes or configurations below if needed

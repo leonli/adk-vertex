@@ -14,6 +14,8 @@
 
 from google.adk.agents import LlmAgent
 
+import os
+
 # Define a tool function
 def get_capital_city(country: str) -> str:
   """Retrieves the capital city for a given country."""
@@ -34,7 +36,10 @@ capital_agent = LlmAgent(
              Example Query: "What's the capital of France?"
              Example Response: "The capital of France is Paris."
         """,
-    tools=[get_capital_city] # Provide the function directly
+    tools=[get_capital_city], # Provide the function directly
+    project=os.environ.get("PROJECT_ID"),
+    location=os.environ.get("LOCATION"),
+    vertexai=True
 )
 
 root_agent = capital_agent
