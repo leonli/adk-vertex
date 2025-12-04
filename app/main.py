@@ -41,7 +41,7 @@ app: FastAPI = get_fast_api_app(
 
 # You can add more FastAPI routes or configurations below if needed
 # Example:
-@app.get("/")
+@app.get("/healthz")
 async def health_check():
     return {"status": "ok"}
 
