@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capital-agent
+  labels:
+    app: capital-agent
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: capital-agent
+  template:
+    metadata:
+      labels:
+        app: capital-agent
+    spec:
+      serviceAccountName: agent-ksa
+      containers:
+      - name: agent
+        image: capital-agent-image # This will be replaced by Skaffold/Cloud Deploy
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: GOOGLE_CLOUD_PROJECT
+          value: "helloworld-334009"
+        - name: GOOGLE_CLOUD_LOCATION
+          value: "us-central1"
+        - name: GOOGLE_GENAI_USE_VERTEXAI
+          value: "true"
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"
