@@ -125,3 +125,23 @@ resource "google_cloudbuild_trigger" "push_trigger" {
 
   depends_on = [google_project_service.apis]
 }
+
+# Service Account for the Agent Workload
+resource "google_service_account" "agent_sa" {
+  account_id   = "agent-sa"
+  display_name = "Agent Service Account"
+}
+
+# Grant Agent SA permissions to use Vertex AI
+resource "google_project_iam_member" "agent_aiplatform_user" {
+  project = var.project_id
+  role    = "roles/aiplatform.user"
+  member  = "serviceAccount:${google_service_account.agent_sa.email}"
+}
+
+# Allow Kubernetes Service Account to impersonate Agent SA (Workload Identity)
+resource "google_service_account_iam_member" "agent_workload_identity" {
+  service_account_id = google_service_account.agent_sa.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "serviceAccount:${var.project_id}.svc.id.goog[default/agent-ksa]"
+}

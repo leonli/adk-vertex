@@ -12,6 +12,12 @@ manifests:
   rawYaml:
     - env/deployment.yaml
     - env/service.yaml
-deploy:
-  cloudrun: {} # Placeholder if we were using Cloud Run, but we are using GKE via Cloud Deploy which uses 'kubectl' or 'helm' implicitly via the targets
-  kubectl: {}
+    - env/serviceaccount.yaml
+
+profiles:
+  - name: prod
+    manifests:
+      rawYaml:
+        - env/deployment.yaml
+        - env/service.yaml
+        - env/serviceaccount.yaml
