@@ -5,7 +5,7 @@ metadata:
   labels:
     app: capital-agent
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app: capital-agent
   ports:

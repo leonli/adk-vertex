@@ -13,6 +13,7 @@ manifests:
     - env/deployment.yaml
     - env/service.yaml
     - env/serviceaccount.yaml
+    - env/ingress.yaml
 
 
 profiles:
@@ -22,11 +23,13 @@ profiles:
         - env/deployment.yaml
         - env/service.yaml
         - env/serviceaccount.yaml
+        - env/ingress.yaml
 
   - name: prod
     manifests:
       rawYaml:
-        - env/deployment.yaml
+        - env/prod/deployment.yaml
         - env/service.yaml
         - env/serviceaccount.yaml
+        - env/ingress.yaml
 
