@@ -10,10 +10,11 @@ The system consists of two environments (**Dev** and **Prod**) and uses a Global
 graph TD
     User((User)) -->|HTTPS| GCLB[Global External LB<br>(Gateway API)]
     
-    subgraph "GKE Autopilot Cluster"
+    subgraph cluster_gke [GKE Autopilot Cluster]
+        direction TB
         GCLB -->|HTTPRoute| Service[K8s Service<br>(ClusterIP)]
         
-        subgraph "Session Affinity (Cookie)"
+        subgraph cluster_affinity [Session Affinity Cookie]
             Service --> Pod1[Agent Pod 1]
             Service --> Pod2[Agent Pod 2]
             Service --> Pod3[Agent Pod 3]
@@ -22,7 +23,8 @@ graph TD
 
     Pod1 -.->|Workload Identity| VertexAI[Vertex AI<br>(Gemini Model)]
     
-    subgraph "CI/CD Pipeline"
+    subgraph cluster_cicd [CI/CD Pipeline]
+        direction TB
         Git[GitHub Repo] -->|Push| CB[Cloud Build]
         CB -->|Build & Push| AR[Artifact Registry]
         CB -->|Create Release| CD[Cloud Deploy]
