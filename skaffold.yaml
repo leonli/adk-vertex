@@ -16,6 +16,7 @@ manifests:
     - env/gateway.yaml
     - env/httproute.yaml
     - env/healthcheckpolicy.yaml
+    - env/backendpolicy.yaml
 
 
 profiles:
@@ -28,6 +29,7 @@ profiles:
         - env/gateway.yaml
         - env/httproute.yaml
         - env/healthcheckpolicy.yaml
+        - env/backendpolicy.yaml
 
   - name: prod
     manifests:
@@ -38,4 +40,5 @@ profiles:
         - env/gateway.yaml
         - env/httproute.yaml
         - env/healthcheckpolicy.yaml
+        - env/backendpolicy.yaml
 

@@ -1,0 +1,13 @@
+apiVersion: networking.gke.io/v1
+kind: GCPBackendPolicy
+metadata:
+  name: capital-agent-affinity
+spec:
+  default:
+    sessionAffinity:
+      type: GENERATED_COOKIE
+      cookieTtlSec: 3600
+  targetRef:
+    group: ""
+    kind: Service
+    name: capital-agent-service
