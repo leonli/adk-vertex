@@ -1,0 +1,17 @@
+apiVersion: skaffold/v4beta7
+kind: Config
+metadata:
+  name: capital-agent
+build:
+  artifacts:
+    - image: capital-agent-image
+      context: app
+      docker:
+        dockerfile: Dockerfile
+manifests:
+  rawYaml:
+    - env/deployment.yaml
+    - env/service.yaml
+deploy:
+  cloudrun: {} # Placeholder if we were using Cloud Run, but we are using GKE via Cloud Deploy which uses 'kubectl' or 'helm' implicitly via the targets
+  kubectl: {}

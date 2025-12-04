@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: capital-agent
+  labels:
+    app: capital-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: capital-agent
+  template:
+    metadata:
+      labels:
+        app: capital-agent
+    spec:
+      containers:
+      - name: agent
+        image: capital-agent-image # This will be replaced by Skaffold/Cloud Deploy
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        resources:
+          requests:
+            cpu: "250m"
+            memory: "512Mi"
+          limits:
+            cpu: "500m"
+            memory: "1Gi"

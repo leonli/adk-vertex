@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: capital-agent-service
+  labels:
+    app: capital-agent
+spec:
+  type: LoadBalancer
+  selector:
+    app: capital-agent
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080

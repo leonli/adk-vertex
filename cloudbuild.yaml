@@ -1,0 +1,31 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', '$_AR_HOSTNAME/$PROJECT_ID/agent-repo/capital-agent:$COMMIT_SHA', './app']
+    id: 'Build'
+
+  # Push the container image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '$_AR_HOSTNAME/$PROJECT_ID/agent-repo/capital-agent:$COMMIT_SHA']
+    id: 'Push'
+
+  # Create a release in Cloud Deploy
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'deploy'
+      - 'releases'
+      - 'create'
+      - 'rel-$SHORT_SHA'
+      - '--delivery-pipeline=agent-pipeline'
+      - '--region=$_DEPLOY_REGION'
+      - '--source=.'
+      - '--images=capital-agent-image=$_AR_HOSTNAME/$PROJECT_ID/agent-repo/capital-agent:$COMMIT_SHA'
+    id: 'Deploy'
+
+substitutions:
+  _AR_HOSTNAME: 'us-central1-docker.pkg.dev'
+  _DEPLOY_REGION: 'us-central1'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
