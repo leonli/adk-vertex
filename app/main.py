@@ -18,7 +18,7 @@ import uvicorn
 from fastapi import FastAPI
 from google.adk.cli.fast_api import get_fast_api_app
 
-# Get the directory where main.py is located
+# Get the directory where main.py is located.
 AGENT_DIR = os.path.dirname(os.path.abspath(__file__))
 # Example session service URI (e.g., SQLite)
 SESSION_SERVICE_URI = ""
