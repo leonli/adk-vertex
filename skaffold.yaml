@@ -13,7 +13,8 @@ manifests:
     - env/deployment.yaml
     - env/service.yaml
     - env/serviceaccount.yaml
-    - env/ingress.yaml
+    - env/gateway.yaml
+    - env/httproute.yaml
 
 
 profiles:
@@ -23,7 +24,8 @@ profiles:
         - env/deployment.yaml
         - env/service.yaml
         - env/serviceaccount.yaml
-        - env/ingress.yaml
+        - env/gateway.yaml
+        - env/httproute.yaml
 
   - name: prod
     manifests:
@@ -31,5 +33,6 @@ profiles:
         - env/prod/deployment.yaml
         - env/service.yaml
         - env/serviceaccount.yaml
-        - env/ingress.yaml
+        - env/gateway.yaml
+        - env/httproute.yaml
 

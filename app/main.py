@@ -41,9 +41,9 @@ app: FastAPI = get_fast_api_app(
 
 # You can add more FastAPI routes or configurations below if needed
 # Example:
-# @app.get("/hello")
-# async def read_root():
-#     return {"Hello": "World"}
+@app.get("/")
+async def health_check():
+    return {"status": "ok"}
 
 if __name__ == "__main__":
     # Use the PORT environment variable provided by Cloud Run, defaulting to 8080
