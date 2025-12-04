@@ -15,6 +15,7 @@ manifests:
     - env/serviceaccount.yaml
     - env/gateway.yaml
     - env/httproute.yaml
+    - env/healthcheckpolicy.yaml
 
 
 profiles:
@@ -26,6 +27,7 @@ profiles:
         - env/serviceaccount.yaml
         - env/gateway.yaml
         - env/httproute.yaml
+        - env/healthcheckpolicy.yaml
 
   - name: prod
     manifests:
@@ -35,4 +37,5 @@ profiles:
         - env/serviceaccount.yaml
         - env/gateway.yaml
         - env/httproute.yaml
+        - env/healthcheckpolicy.yaml
 
