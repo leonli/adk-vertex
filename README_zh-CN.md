@@ -6,7 +6,7 @@
 
 ## 🏗️ 架构
 
-系统包含两个环境（**Dev** 和 **Prod**），并使用全球外部负载均衡器（Global External Load Balancer）来路由流量。
+系统包含两个环境（**Dev** 和 **Prod**），并使用全球外部负载均衡器（Global External Load Balancer）来路由流量。Good
 
 ```mermaid
 graph TD
